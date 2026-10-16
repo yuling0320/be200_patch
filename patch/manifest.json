@@ -1,0 +1,19 @@
+{
+  "status": "release-tested-on-one-documented-environment",
+  "source_exe_sha256": "4c9501235b9ace2420976564de49c96dee2f2b0ceea4a56bdf6249957a9e03a4",
+  "system_iphlpapi_sha256": "8521026d021cc5193a7cd7c0256bd14c7ab39738d22c019e6d544b37deee12c0",
+  "candidate_sha256": "73e9979e77b61ea31727222b346c51c6d4c51d5b9a3877e91075f431d67678ae",
+  "exports": 313,
+  "import_dlls": [
+    "KERNEL32.dll",
+    "ADVAPI32.dll",
+    "bcrypt.dll"
+  ],
+  "scope": "Only original HiConnectivityService.exe SHA256 and its GetAdaptersInfoExt caller; active numbered BE200 virtual adapter matching original registry IPv4; Description only.",
+  "preserves": "Original signed Huawei EXE and IPC Authenticode verification; real IP Helper used for all functions; no driver/registry changes.",
+  "limitations": [
+    "Validated only on this PC with PCManager14.0.7.310(C233), BE200 driver24.20.0.4 and the tested HarmonyOS7 phone.",
+    "User confirmed display and control; no independent long-duration stress test performed.",
+    "App-local unsigned DLL is loaded by Huawei processes; original signed EXE and IPC verification remain in place."
+  ]
+}

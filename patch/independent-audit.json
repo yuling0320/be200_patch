@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "candidate_sha256": "73e9979e77b61ea31727222b346c51c6d4c51d5b9a3877e91075f431d67678ae",
+  "review_time": "2026-10-16T10:18:55.638508+08:00",
+  "reviewer": "independent intel_connection worker",
+  "meaning": "No remaining blocking issue found in this candidate and current deployment script. This is a local compatibility candidate, not successful phone mirroring or authorization to deploy.",
+  "reviewed_files": {
+    "proxy.c": "d221d65c725cd25305baeadb25e4b266ecf7baae29996189c27d82bf7fe9e289",
+    "adapter_policy.h": "cced138bd80dafa72a13ce8a9caf994cbf8a94662a1a7f75a317eaeff5f7686e",
+    "build.py": "785e0ae8d96f388d3e7dc7652e89458d8cb45cfab5ef83943d9f465773ebb249",
+    "win_min.h": "4cbf534c53c9bc560ada1ec4068aa3b99f74c159a4ae8c861548dd8e2a0384d3",
+    "Set-BE200Proxy.ps1": "d1bfb318ad0c9a9ee2c8d1daa773d0f0adc94a0d1406a65c926991163151034a"
+  },
+  "observations": [
+    "No Huawei executable is modified. The proxy imports no trust-verification or remote-memory APIs and contains no DllMain/entrypoint. IPC Authenticode verification is not patched.",
+    "GetAdaptersInfo response adaptation requires successful real API output, bounded returned capacity, original host filename, exact on-disk original EXE SHA256, and caller within original GetAdaptersInfoExt RVA [0xad1f0,0xad460).",
+    "The caller guard is a function range, not two exact return addresses; known original API return sites 0xad21b and 0xad39f fall in this range. The exact original hash bounds this to reviewed original code.",
+    "Adaptation requires one unique Type71, six-byte-MAC, nonzero-index adapter with exact numbered BE200 model description and an IPv4 text equal to the original LocalAddress registry value. Physical BE200 and inactive 0.0.0.0 interfaces are not selected.",
+    "Policy validates nodes and IP list containment, bounded lengths/cycles/counts, and ambiguity before writing. It replaces only 39 Description bytes including NUL; other bytes remain unchanged in recorded snapshot tests.",
+    "Real IP Helper is loaded by absolute GetSystemDirectoryW path with LOAD_LIBRARY_SEARCH_SYSTEM32; the native probe confirms separate local/system module identities and no load recursion.",
+    "All 313 export names and ordinals match this machines System32 IP Helper. All 312 assembly forwarding stubs were decoded independently and restore RCX/RDX/R8/R9 and XMM0-3, keep caller stack arguments, maintain 16-byte call alignment, and tail-jump through the matching function slot.",
+    "All 312 forwarding stubs passed synthetic RtlVirtualUnwind checks both before and after stack restoration: 624 checks. The earlier register-indirect tail-epilog concern is fixed by FF25 RIP-relative jumps.",
+    "GetLastError is restored around resolver and compatibility work. InitOnce serializes real export initialization and host classification. Hash/registry/ambiguity failures skip adaptation.",
+    "Deployment script verifies exact original EXE hash/valid Huawei signature, both fixed service executable paths, matching native/audit results, unchanged System32 hash and absence of existing app-local DLL before mutation.",
+    "Deployment adds only the reviewed DLL through a verified temporary file. It stops client then server, starts server then client, checks target module path and fresh new-PID IPC success after the current startup cutoff, then rechecks original EXE identity.",
+    "Deployment recovery removes only the known installed candidate by hash and attempts to restore prior running services; it records any restoration failure. Rollback moves only that specific known file to research evidence. No recursive delete, driver change or registry write is present.",
+    "ValidateOnly returns before service control or Program Files writes. The finally block writes only the local operation result. Review included the current ValidateOnly, ServiceController start/stop and timestamp-filter changes."
+  ],
+  "resolved_findings": [
+    "Register-indirect forwarding tail changed to a valid RIP-relative indirect epilog and independently unwind-tested.",
+    "Deployment IPC log verification now requires both current client PID and timestamp at or after this startup, avoiding stale PID-only success.",
+    "Service start/stop now uses ServiceController methods and explicit 30-second WaitForStatus rather than placing the bound after a cmdlet wait."
+  ],
+  "residual_limits": [
+    "The unsigned DLL adds executable code to any application process that loads this app-local IP Helper. Unrelated hosts forward unchanged, but the additional loader/resolver code still runs there; deployment needs explicit user approval.",
+    "Real export initialization is deliberately fail-fast if loading the system module or resolving any of the 313 exports fails. Such a failure terminates the loading process rather than returning fabricated API success. The script binds installation to the tested current System32 DLL; a later Windows change requires revalidation.",
+    "No own DllMain means no own attach-time initialization; another module calling the proxy while under its loader lock remains an untested application load-order concern.",
+    "The host file hash and caller range restrict compatibility behavior; they are not a replacement for Windows security validation or a general anti-tamper boundary.",
+    "No Huawei target was executed by this reviewer. Actual service load order, security policy acceptance, service recovery and phone mirroring remain runtime checks. Service verification failure is designed to remove the candidate, but locked files or service-control failures can still require manual recovery."
+  ],
+  "evidence": [
+    "audit-binary-result.json",
+    "audit-unwind-result.json",
+    "validation.json",
+    "audit_binary.py",
+    "audit_unwind.py"
+  ],
+  "system_modified_by_reviewer": false,
+  "deployment_executed_by_reviewer": false
+}

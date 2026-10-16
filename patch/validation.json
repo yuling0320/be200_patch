@@ -1,0 +1,47 @@
+{
+  "time": "2026-10-16T10:15:53.800536+08:00",
+  "candidate_sha256": "73e9979e77b61ea31727222b346c51c6d4c51d5b9a3877e91075f431d67678ae",
+  "tests": [
+    {
+      "name": "CompatProbe.exe",
+      "exit_code": 0,
+      "output": "PASS policy byte preservation, ambiguity and malformed data guards\nPASS local DLL loaded separately from System32 IP Helper\nPASS genuine OS adapter data unchanged for unrelated host\nPASS 12 threads x 30 calls across GetAdaptersInfo/GetNumberOfInterfaces/GetIfTable2/FreeMibTable"
+    },
+    {
+      "name": "IdentityProbe.exe",
+      "exit_code": 0,
+      "output": "PASS production BCrypt SHA256 accepts exact signed original, rejects modified EXE\nPASS host guard rejects unrelated test executable"
+    },
+    {
+      "name": "Recorded BE200 GO snapshots",
+      "snapshots": [
+        {
+          "phase": "BeforeStart",
+          "adapted": 0,
+          "all_other_bytes_unchanged": true
+        },
+        {
+          "phase": "Started-1061ms",
+          "adapted": 1,
+          "all_other_bytes_unchanged": true
+        },
+        {
+          "phase": "Started-3189ms",
+          "adapted": 1,
+          "all_other_bytes_unchanged": true
+        },
+        {
+          "phase": "Started-5044ms",
+          "adapted": 1,
+          "all_other_bytes_unchanged": true
+        },
+        {
+          "phase": "AfterStop",
+          "adapted": 0,
+          "all_other_bytes_unchanged": true
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

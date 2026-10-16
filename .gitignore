@@ -1,0 +1,14 @@
+src/*.obj
+src/*.lib
+src/*.def
+src/*.s
+src/*.dll
+src/*.exe
+src/exports.h
+src/manifest.json
+src/test-input/
+**/__pycache__/
+operation-*.json
+removed-*.dll
+.env
+*.log
